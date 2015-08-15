@@ -1,0 +1,37 @@
+public class Solution {
+    public int maxProfit(int[] prices) {
+    
+    int priceSize = prices.length;
+    if(priceSize == 0 || priceSize == 1){
+        return 0;
+    }
+    int[] profitFor = new int[priceSize];
+    int[] profitBac = new int[priceSize];
+    int localMin=prices[0];
+    int localMax = prices[priceSize-1];
+    int j = priceSize-2;
+    int result=0;
+    profitFor[0]=0;
+    profitBac[priceSize-1] = 0;
+    for(int i = 1;i<priceSize+1 && j >=0;i++,j--)
+    {
+        profitFor[i] = max(profitFor[i-1],prices[i]-localMin);
+        localMin= min(localMin,prices[i]);
+        profitBac[j] = max(profitBac[j+1],localMax-prices[j]);
+        localMax = max(localMax,prices[j]);
+    }
+    for(int i = 1; i<priceSize; i++)
+    {
+        result = max(result,profitFor[i]+profitBac[i]);
+    }
+    return result;
+           
+    }
+    
+    public int max(int a,int b){
+        return (a>b)?a:b;
+    }
+    
+    public int min(int a,int b){
+        return (a>b)?b:a;
+
