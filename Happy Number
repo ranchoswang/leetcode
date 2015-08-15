@@ -1,0 +1,24 @@
+import java.util.HashSet;
+ 
+public class Solution {
+    static HashSet<Integer> set = new HashSet<Integer>();
+    public boolean isHappy(int n) {
+        if(n == 1)
+            return true;
+        Integer N = new Integer(n);
+        int length = N.toString().length();
+        int[] nums = new int[length];
+        for(int i = 0; i < length; i++){
+            nums[i] = n%10;
+            n = n /10;
+        }
+        int sum = 0;
+        for(int i : nums){
+            sum += i * i;
+        }
+        if(set.contains(sum))
+            return false;
+        set.add(sum);
+        return isHappy(sum);
+    }
+}
