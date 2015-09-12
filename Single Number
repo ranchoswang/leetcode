@@ -1,0 +1,26 @@
+public class Solution {
+    public int singleNumber1(int[] nums) {
+        int length = nums.length;
+        boolean[] array = new boolean[length];
+        Arrays.fill(array,false);
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(int i = 0; i < length; i ++){
+        	Integer index = map.put(nums[i], i);//index != null means index is previous location of nums[i], and i is current location. 
+        	if(index != null){
+        		array[index] = true;
+        		array[i] = true;
+        	}
+        }
+        int index = 0;
+        while(array[index])
+            index++;
+        return nums[index];
+    }
+    
+     public int singleNumber2(int[] nums) {
+        int res = nums[0];
+        for (int i = 1; i < nums.length; i++)
+            res = res ^ nums[i];// two same numbers XOR will get zeros, and XOR is irrelevent with the sequence.
+        return res;
+    }
+}
