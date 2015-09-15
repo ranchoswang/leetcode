@@ -1,0 +1,50 @@
+/*
+* Given an integer n, count the total number of digit 1 appearing in all non-negative integers less than or equal to n.
+* For example:
+* Given n = 13,
+* Return 6, because digit 1 occurred in the following numbers: 1, 10, 11, 12, 13.
+*
+* Go through the digit positions by using position multiplier m with values 1, 10, 100, 1000, etc.
+* For each position, split the decimal representation into two parts, for example split n=3141592 into a=31415 and b=92 
+* when we're at m=100 for analyzing the hundreds-digit. And then we know that the hundreds-digit of n is 1 for prefixes 
+* "" to "3141", i.e., 3142 times. Each of those times is a streak, though. Because it's the hundreds-digit, each streak 
+* is 100 long. So (a / 10 + 1) * 100 times, the hundreds-digit is 1.
+* Consider the thousands-digit, i.e., when m=1000. Then a=3141 and b=592. The thousands-digit is 1 for prefixes "" to "314",
+* so 315 times. And each time is a streak of 1000 numbers. However, since the thousands-digit is a 1, the very last streak 
+* isn't 1000 numbers but only 593 numbers, for the suffixes "000" to "592". So (a / 10 * 1000) + (b + 1) times, the 
+* thousands-digit is 1.
+* The case distincton between the current digit/position being 0, 1 and >=2 can easily be done in one expression. 
+* With (a + 8) / 10 you get the number of full streaks, and a % 10 == 1 tells you whether to add a partial streak.
+* 
+* 如果以上的英文没有看懂，以下将用中文描述：
+* 代码的思路总体思路是，在每一个循环中，计算从1到n变化过程中，每一位（个、十、百、千、万...）上1出现的次数，然后将其
+* 加起来.
+* 以计算3141592的百位为例，首先求出其百位的高位 a = n / 100 = 31415
+* 那么随着n从0每增加100，其百位也会增加1，记录下其百位的变化情况：
+*           0    ~       99
+*         100    ~      199       百位共1 * 100 个1
+*         200    ~      299
+*         ...    ~      ...
+*        1100    ~     1199       百位共2 * 100 个1
+*        ....    ~     ....
+*        2100    ~     2199       百位共3 * 100 个1
+*        ....    ~     ....
+*     3141100    ~  3141199       百位共3142 * 100 个1
+*     3141500    ~  3141592
+* 所以百位出现的1总数为(a / 10 + 1)*100 个1. 
+* 值得注意一点的是，假如n的某一位为1，例如3141592的千位，那么最后一次将不够1000个1:
+*     3141000    ~  3141592       千位共314 * 1000 +　593 个1
+* 所以当千位为1，那么该位出现1的总数(a / 10 * 1000) + (b + 1) 个1.
+* 经过调整，分成该位为0,1 或其他2~9 两种情况.
+*/
+public class Solution {
+    public int countDigitOne(int n) {
+        int count = 0;
+        for (long k = 1; k <= n; k *= 10) {
+          long r = n / k;
+          long m = n % k;
+          count += (r + 8) / 10 * k + (r % 10 == 1 ? m + 1 : 0);
+        }
+    return count;
+    }
+}
