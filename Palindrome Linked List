@@ -1,3 +1,14 @@
+/*
+Given a singly linked list, determine if it is a palindrome.
+The only algorithm figured out which has O(1) space and O(n) time is described as followed:
+Use two pointers, of which the first one jumps two node in one loop, while the second one jumps one node in one loop.
+When the first one reaches the end of or the last end of the linked list, the second one reaches the middle.(This a way you can get to the middle in one pass because you don't have to get the length of the linked list.) It costs O(n) time and O(1) space.
+Then reverse half of the linked list from the middle, and it costs O(n) time and O(1) space.
+Finally, check linked list simultaneously from the head and the middle. It costs O(n) time and O(1) space.
+*/
+
+
+
 public class Solution{
 	public boolean isPalindrome(ListNode head){
 		if(head == null || head.next == null)
