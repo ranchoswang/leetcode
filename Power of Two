@@ -1,0 +1,14 @@
+/* Given an integer, write a function to determine if it is a power of two.
+*
+* If an integer is power of two, the binary form of it should be 0...010..0, and (n&(n-1)) = 0 is the
+* sufficient and necessary condition.
+* Consider a number n which is not the power of two minus 1, it should be like 0...01..0.. That is to say, it must
+* have no less than one "0" after the highest 1. Consider the lowest "0", because there are only "1" behind it or
+* nothing. If n plus 1, it must produce carry in this digit, which turns 0 to 1. Therefore, the answer of logic AND
+* by bit is no longer all zeros.
+*/
+public class Solution {
+    public boolean isPowerOfTwo(int n) {
+         return n > 0 && ((n&(n-1)) == 0);
+    }
+}
