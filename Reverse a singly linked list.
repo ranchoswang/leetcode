@@ -1,37 +1,35 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
+/* Reverse a singly linked list.
+* 
+* The first method goes one pass and uses O(1) extra space.
+* The second uses iteration, and it's basically same as the first one.
+* However, since the second one need to keep useless stack in the storage, it uses O(n) space.
+*/
+
+
+
 public class Solution {
-    public ListNode reverseList(ListNode head) {
+    public ListNode reverseList1(ListNode head) {
+        ListNode pre = null;
+        ListNode node = head;
+        while(node != null){
+            ListNode next = node.next;
+            node.next = pre;
+            pre = node;
+            node = next;
+        }
+        return pre;
+    }
+    public ListNode reverseList2(ListNode head) {
+        return reverse(head, null);
+    }
+    public ListNode reverse(ListNode head, ListNode last){
         if(head == null)
-            return null;
-        if(head.next == null)
+            return last;
+        ListNode next = head.next;
+        head.next = last;
+        if(next == null)
             return head;
-        if(head.next.next == null){
-            ListNode node = head.next;
-            node.next = head;
-            head.next = null;
-            return node;
-        }
-
-
-        ListNode pre = head;
-        ListNode cur = head.next;
-        ListNode last = cur.next;
-
-        pre.next = null;
-        while(last != null){
-            cur.next = pre;
-            pre = cur;
-            cur = last;
-            last = last.next;
-        }
-        cur.next = pre;
-        return cur;
+        else
+            return reverse(next, head);
     }
 }
