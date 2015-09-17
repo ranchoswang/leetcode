@@ -1,0 +1,22 @@
+/* Given a range [m, n] where 0 <= m <= n <= 2147483647, return the bitwise AND of all numbers in this range, inclusive.
+* For example, given the range [5, 7], you should return 4.
+*
+* The method is simple, assume that "m" and "n" have the same prefix in binary form "l" like :
+* m : 1 1 0 1 0 0 1 0 0 1 1 0 1 0 1
+* n : 1 1 0 1 0 0 0 1 0 0 1 0 1 1 1
+* l : 1 1 0 1 0 0
+* The answer would be "l" and several "0" which length is equal to the "suffix" of "m"
+* answer : 1 1 0 1 0 0 0 0 0 0 0 0 0 0.
+*/
+public class Solution {
+    public int rangeBitwiseAnd(int m, int n) {
+        int digit = 0;
+        while(m != n){
+            m = m >> 1;
+            n = n >> 1;
+            digit ++;
+        }
+        // m = n = l, then move back to the same length.
+        return m << digit;
+    }
+}
