@@ -1,0 +1,56 @@
+/* Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, ...) which sum to n.
+*  For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
+*
+*  See "Lagrange's four-square theorem" <https://en.wikipedia.org/wiki/Lagrange%27s_four-square_theorem>
+*  Therefore the answer of this question can only be 1 to 4.
+*  
+*  Here are 4 basic ways to solve the question.
+*/
+
+
+
+/*
+*  1st Dynamic Programming.
+*  Maintain a table storing the previous answer. In following code, ArrayList<Integer> array stores the answer, and if
+*  n >= array.size, which indicate that new answer should be updated, and by dividing n into i*i and n - i*i, we can get
+*  the loop.
+*/
+public class Solution {
+    ArrayList<Integer> array = new ArrayList<Integer>();
+	  public int numSquares(int n){
+		if(array.isEmpty())
+		    array.add(0);
+		while(array.size() < n+1){
+			  int size = array.size();
+			  int temp = Integer.MAX_VALUE;
+			  for(int i = 1; i * i <= size; i ++)
+				    temp = Math.min(temp, array.get(size - i*i)+1);
+				array.add(temp);
+	  }
+	  return array.get(n);
+}
+
+
+/*
+*  2nd Dynamic Programming
+*  The idea is similar to the 1st one, we maintain an array of which size is n+1.
+*/
+public class Solution {
+    public int numSquares(int n) {
+       int[] dp = new int[n + 1];
+       Arrays.fill(dp, Integer.MAX_VALUE);
+       dp[0] = 0;
+       for(int i = 0; i <= n; i++){
+           for(int j = 1; i + j * j <= n; j++){
+               dp[i  + j * j] = Math.min(dp[i + j * j], dp[i] + 1);
+            }
+       }
+       return dp[n];
+    }
+}
+
+/*
+*  3rd Broadth first search
+*
+*/
+
