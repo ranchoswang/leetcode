@@ -44,19 +44,22 @@ public class Solution {
 */
 public class Solution {
     public int hIndex(int[] citations) {
-        if(citations == null || citations.length == 0)
+        int size = citations.length;
+        if(size == 0)
             return 0;
-        Arrays.sort(citations);
-        int index = 0;
-        while(citations[index] == 0){
-            index++;
-            if(index == citations.length)
-                break;
+        int[] stats = new int[size + 1];
+        for(int element : citations){
+            if(element > size)
+                stats[size] += 1;
+            else
+                stats[element] += 1;
         }
-        int i;
-        for(i = index; i < citations.length; i++)
-            if(citations[i] + i >= citations.length)
-                break;
-        return citations.length - i;
+        int sum = 0;
+        for(int i = size; i >= 0; i--){
+            sum += stats[i];
+            if(sum >= i)
+                return i;
+        }
+        return 0;
     }
 }
