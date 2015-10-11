@@ -1,0 +1,62 @@
+/* Given an array of citations (each citation is a non-negative integer)of a researcher, write a function 
+*  to compute the researcher's h-index.
+*/
+
+/* 
+*  There are two basic method, the easy approach is sort. Since the 0 elements don't effect the result,
+*  we can eliminate them in advance, if index + nums[index] is greater or equal to length, which means we have find
+*  the max(min (f(i), i)) (i = 0 ~ length - 1).
+*  nums  : 0  3  3  3  6  7  9 
+*  index : 0  1  2  3  4  5  6
+*  sum   : 0  4  5  6 10 12 13
+*  e.g. We have to stop at index = 4, and length - index = 3 is the result we want.
+*  We used sorting, so the time complextity is o(nlogn).
+*/
+
+public class Solution {
+    public int hIndex(int[] citations) {
+        if(citations == null || citations.length == 0)
+            return 0;
+        Arrays.sort(citations);
+        int index = 0;
+        while(citations[index] == 0){
+            index++;
+            if(index == citations.length)
+                break;
+        }
+        int i;
+        for(i = index; i < citations.length; i++)
+            if(citations[i] + i >= citations.length)
+                break;
+        return citations.length - i;
+    }
+}
+
+/*
+* The second method uses extra spaces for faster time. We maintain a table counting the the appearance of the number.
+*  nums  : 0  3  3  3  6  7  9 
+* -----------------table---------------------
+*  nums       : 0  1  2  3  4  5  6  >=7  (length = 7) 
+* appearance  : 0  0  0  3  0  0  1   2
+* -------------------------------------------
+* Then we sum up from the end of the appearance array, if sum >= nums, which means we have enough numbers greater than
+* or equal to nums. Then return. The time complexity is o(n).
+*/
+public class Solution {
+    public int hIndex(int[] citations) {
+        if(citations == null || citations.length == 0)
+            return 0;
+        Arrays.sort(citations);
+        int index = 0;
+        while(citations[index] == 0){
+            index++;
+            if(index == citations.length)
+                break;
+        }
+        int i;
+        for(i = index; i < citations.length; i++)
+            if(citations[i] + i >= citations.length)
+                break;
+        return citations.length - i;
+    }
+}
