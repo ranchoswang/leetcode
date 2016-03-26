@@ -5,8 +5,13 @@ public class Solution {
     if(priceSize == 0 || priceSize == 1){
         return 0;
     }
+    
+    //porfitFor[i] maintains the highest profit can ever be made by two transactions before day i.
+    //profitBac[j] maintains the highest profit can ever be made by two transactions after day j. 
     int[] profitFor = new int[priceSize];
     int[] profitBac = new int[priceSize];
+    
+    
     int localMin=prices[0];
     int localMax = prices[priceSize-1];
     int j = priceSize-2;
@@ -34,4 +39,6 @@ public class Solution {
     
     public int min(int a,int b){
         return (a>b)?b:a;
+    }
+}
 
