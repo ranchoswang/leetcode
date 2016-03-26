@@ -11,7 +11,8 @@ public class Solution {
     public boolean isBalanced(TreeNode root){
     	return depth(root) != -1;
     }
-    
+    //function depth(TreeNode root) returns the depth of the root if it is a balanced tree,
+    //returns -1 if not.
     public int depth(TreeNode root){
     	if(root == null)
     		return 0;
